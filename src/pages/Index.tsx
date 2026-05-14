@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import Icon from "@/components/ui/icon";
 
 const HERO_IMAGE = "https://cdn.poehali.dev/projects/515f9a1c-35f2-400b-9e2b-b28d4e3ff206/files/0d563dcb-d975-4f1b-88c6-f205c8824ddc.jpg";
+const IMG_REPAIR = "https://cdn.poehali.dev/projects/515f9a1c-35f2-400b-9e2b-b28d4e3ff206/files/2478fb63-bc3a-43a4-8041-d59db6cb3c71.jpg";
+const IMG_APPLIANCE = "https://cdn.poehali.dev/projects/515f9a1c-35f2-400b-9e2b-b28d4e3ff206/files/353a5cf7-3e78-4075-8dd1-87b0acf8d813.jpg";
+const IMG_RECEPTION = "https://cdn.poehali.dev/projects/515f9a1c-35f2-400b-9e2b-b28d4e3ff206/files/b5f184d3-ceff-4241-8682-8433255b1b65.jpg";
 
 const NAV_LINKS = [
   { id: "home", label: "Главная" },
@@ -322,19 +325,16 @@ export default function Index() {
               ))}
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4">
-            {[
-              { icon: "Users", label: "Опытная команда", val: "12 мастеров" },
-              { icon: "MapPin", label: "Удобное расположение", val: "Центр города" },
-              { icon: "Star", label: "Рейтинг", val: "4.9 / 5.0" },
-              { icon: "Clock", label: "Режим работы", val: "9:00 – 21:00" },
-            ].map((card, i) => (
-              <div key={i} className={`rounded-2xl p-5 border ${i % 2 === 0 ? "bg-[#e8251a] border-[#e8251a]" : "bg-[#ffc107] border-[#ffc107]"}`}>
-                <Icon name={card.icon} size={24} className="text-white mb-3" />
-                <div className="font-semibold text-white text-lg mb-0.5">{card.val}</div>
-                <div className="text-white/70 text-xs">{card.label}</div>
-              </div>
-            ))}
+          <div className="grid grid-cols-2 gap-3">
+            <div className="col-span-2 rounded-2xl overflow-hidden h-52">
+              <img src={IMG_RECEPTION} alt="Наш сервисный центр" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+            </div>
+            <div className="rounded-2xl overflow-hidden h-40">
+              <img src={IMG_REPAIR} alt="Ремонт электроники" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+            </div>
+            <div className="rounded-2xl overflow-hidden h-40">
+              <img src={IMG_APPLIANCE} alt="Ремонт бытовой техники" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+            </div>
           </div>
         </div>
       </section>
