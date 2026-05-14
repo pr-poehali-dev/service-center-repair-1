@@ -11,14 +11,32 @@ const NAV_LINKS = [
   { id: "contacts", label: "Контакты" },
 ];
 
-const SERVICES = [
-  { icon: "Smartphone", title: "Ремонт смартфонов", desc: "iPhone, Samsung, Xiaomi и другие. Замена экранов, аккумуляторов, разъёмов.", price: "от 800 ₽", time: "1–3 часа" },
-  { icon: "Laptop", title: "Ремонт ноутбуков", desc: "Диагностика, чистка, замена матриц, клавиатур, жёстких дисков.", price: "от 1 500 ₽", time: "1–2 дня" },
-  { icon: "Tablet", title: "Ремонт планшетов", desc: "Все марки и модели. Замена стекла, разъёма зарядки, кнопок.", price: "от 1 000 ₽", time: "1–3 часа" },
-  { icon: "Headphones", title: "Ремонт наушников", desc: "TWS, проводные, накладные. Замена кабелей, корпусов, динамиков.", price: "от 500 ₽", time: "1 час" },
-  { icon: "Watch", title: "Смарт-часы", desc: "Apple Watch, Garmin, Samsung Galaxy Watch и другие модели.", price: "от 1 200 ₽", time: "1–3 часа" },
-  { icon: "Gamepad2", title: "Игровые приставки", desc: "PS4/5, Xbox, Nintendo Switch. Замена кнопок, ремонт джойстиков.", price: "от 1 500 ₽", time: "1–2 дня" },
+const SERVICE_CATEGORIES = [
+  {
+    category: "Электроника и гаджеты",
+    items: [
+      { icon: "Smartphone", title: "Ремонт смартфонов", desc: "iPhone, Samsung, Xiaomi и другие. Замена экранов, аккумуляторов, разъёмов.", price: "от 800 ₽", time: "1–3 часа" },
+      { icon: "Laptop", title: "Ремонт ноутбуков", desc: "Диагностика, чистка, замена матриц, клавиатур, жёстких дисков.", price: "от 1 500 ₽", time: "1–2 дня" },
+      { icon: "Tablet", title: "Ремонт планшетов", desc: "Все марки и модели. Замена стекла, разъёма зарядки, кнопок.", price: "от 1 000 ₽", time: "1–3 часа" },
+      { icon: "Headphones", title: "Ремонт наушников", desc: "TWS, проводные, накладные. Замена кабелей, корпусов, динамиков.", price: "от 500 ₽", time: "1 час" },
+      { icon: "Watch", title: "Смарт-часы", desc: "Apple Watch, Garmin, Samsung Galaxy Watch и другие модели.", price: "от 1 200 ₽", time: "1–3 часа" },
+      { icon: "Gamepad2", title: "Игровые приставки", desc: "PS4/5, Xbox, Nintendo Switch. Замена кнопок, ремонт джойстиков.", price: "от 1 500 ₽", time: "1–2 дня" },
+    ],
+  },
+  {
+    category: "Бытовая техника",
+    items: [
+      { icon: "WashingMachine", title: "Стиральные машины", desc: "Замена подшипников, насосов, ТЭНов. Все марки: Bosch, Samsung, LG и другие.", price: "от 1 500 ₽", time: "1–2 дня" },
+      { icon: "Refrigerator", title: "Холодильники", desc: "Заправка фреоном, замена компрессора, ремонт термостата.", price: "от 2 000 ₽", time: "1–3 дня" },
+      { icon: "Microwave", title: "Микроволновые печи", desc: "Замена магнетрона, трансформатора, дверцы. Устранение искрения.", price: "от 800 ₽", time: "1–2 часа" },
+      { icon: "Wind", title: "Кондиционеры", desc: "Чистка, заправка, замена плат управления и компрессоров.", price: "от 2 500 ₽", time: "1–2 дня" },
+      { icon: "Flame", title: "Кухонные плиты", desc: "Ремонт газовых и электрических плит, духовок, варочных поверхностей.", price: "от 1 000 ₽", time: "1–2 дня" },
+      { icon: "Zap", title: "Мелкая бытовая техника", desc: "Утюги, пылесосы, кофемашины, блендеры и другие приборы.", price: "от 500 ₽", time: "1–3 часа" },
+    ],
+  },
 ];
+
+const SERVICES = SERVICE_CATEGORIES.flatMap(c => c.items);
 
 const STATUSES: Record<string, { label: string; step: number; cls: string; icon: string }> = {
   "received": { label: "Принято в работу", step: 1, cls: "status-received", icon: "PackageCheck" },
@@ -49,6 +67,7 @@ const STATS = [
 
 export default function Index() {
   const [activeSection, setActiveSection] = useState("home");
+  const [activeCategory, setActiveCategory] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [orderInput, setOrderInput] = useState("");
   const [orderResult, setOrderResult] = useState<null | { found: boolean; order?: typeof MOCK_ORDERS[string]; id?: string }>(null);
@@ -237,12 +256,25 @@ export default function Index() {
       {/* SERVICES */}
       <section id="services" className="py-20 bg-gray-50 grid-pattern">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-14">
+          <div className="text-center mb-10">
             <p className="text-[#e8251a] text-xs font-semibold uppercase tracking-widest mb-3">Что мы чиним</p>
             <h2 className="font-display text-4xl sm:text-5xl font-bold text-gray-900">НАШИ УСЛУГИ</h2>
           </div>
+          {/* Category tabs */}
+          <div className="flex gap-3 justify-center mb-10 flex-wrap">
+            {SERVICE_CATEGORIES.map((cat, i) => (
+              <button key={i} onClick={() => setActiveCategory(i)}
+                className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${
+                  activeCategory === i
+                    ? "bg-[#e8251a] text-white shadow-md"
+                    : "bg-white text-gray-600 border border-gray-200 hover:border-red-200 hover:text-[#e8251a]"
+                }`}>
+                {cat.category}
+              </button>
+            ))}
+          </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {SERVICES.map((s, i) => (
+            {SERVICE_CATEGORIES[activeCategory].items.map((s, i) => (
               <div key={i} className="bg-white rounded-2xl p-6 group hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-red-100 cursor-pointer">
                 <div className="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center mb-4 group-hover:bg-red-100 transition-all">
                   <Icon name={s.icon} size={22} className="text-[#e8251a]" />
