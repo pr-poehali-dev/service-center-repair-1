@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import Icon from "@/components/ui/icon";
 
+const API = {
+  applications: "https://functions.poehali.dev/0fb80a10-6aa5-44cc-a5dc-06e8681319f0",
+  orders: "https://functions.poehali.dev/37b0c3fa-790a-4f92-a8b7-81cb24b39951",
+};
+
 const HERO_IMAGE = "https://cdn.poehali.dev/projects/515f9a1c-35f2-400b-9e2b-b28d4e3ff206/files/0d563dcb-d975-4f1b-88c6-f205c8824ddc.jpg";
 const IMG_REPAIR = "https://cdn.poehali.dev/projects/515f9a1c-35f2-400b-9e2b-b28d4e3ff206/files/2478fb63-bc3a-43a4-8041-d59db6cb3c71.jpg";
 const IMG_APPLIANCE = "https://cdn.poehali.dev/projects/515f9a1c-35f2-400b-9e2b-b28d4e3ff206/files/353a5cf7-3e78-4075-8dd1-87b0acf8d813.jpg";
@@ -76,6 +81,8 @@ export default function Index() {
   const [orderResult, setOrderResult] = useState<null | { found: boolean; order?: typeof MOCK_ORDERS[string]; id?: string }>(null);
   const [contactForm, setContactForm] = useState({ name: "", phone: "", device: "", comment: "" });
   const [contactSent, setContactSent] = useState(false);
+  const [contactLoading, setContactLoading] = useState(false);
+  const [orderLoading, setOrderLoading] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -97,15 +104,37 @@ export default function Index() {
     setMobileMenuOpen(false);
   };
 
-  const checkOrder = () => {
+  const checkOrder = async () => {
     const id = orderInput.trim().toUpperCase();
-    const order = MOCK_ORDERS[id];
-    setOrderResult(order ? { found: true, order, id } : { found: false });
+    setOrderLoading(true);
+    try {
+      const res = await fetch(`${API.orders}?number=${id}`);
+      if (res.status === 404) {
+        setOrderResult({ found: false });
+      } else {
+        const data = await res.json();
+        setOrderResult({ found: true, order: { device: data.device, status: data.status, master: data.master || '—', date: data.created_at?.slice(0, 10) }, id });
+      }
+    } catch {
+      setOrderResult({ found: false });
+    } finally {
+      setOrderLoading(false);
+    }
   };
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setContactSent(true);
+    setContactLoading(true);
+    try {
+      await fetch(API.applications, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(contactForm),
+      });
+      setContactSent(true);
+    } finally {
+      setContactLoading(false);
+    }
   };
 
   return (
@@ -208,8 +237,8 @@ export default function Index() {
                 onKeyDown={e => e.key === "Enter" && checkOrder()}
                 className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#e8251a]/50 transition-all"
               />
-              <button onClick={checkOrder} className="btn-neon px-4 py-2.5 rounded-xl">
-                <Icon name="Search" size={16} />
+              <button onClick={checkOrder} disabled={orderLoading} className="btn-neon px-4 py-2.5 rounded-xl disabled:opacity-60">
+                <Icon name={orderLoading ? "Loader" : "Search"} size={16} className={orderLoading ? "animate-spin" : ""} />
               </button>
             </div>
 
@@ -442,8 +471,9 @@ export default function Index() {
                       rows={3} placeholder="Разбит экран, не заряжается..."
                       className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#e8251a]/50 transition-all resize-none" />
                   </div>
-                  <button type="submit" className="w-full btn-neon py-3 rounded-xl font-semibold text-sm">
-                    Отправить заявку
+                  <button type="submit" disabled={contactLoading} className="w-full btn-neon py-3 rounded-xl font-semibold text-sm disabled:opacity-60 flex items-center justify-center gap-2">
+                    {contactLoading && <Icon name="Loader" size={16} className="animate-spin" />}
+                    {contactLoading ? "Отправляем..." : "Отправить заявку"}
                   </button>
                 </form>
               )}

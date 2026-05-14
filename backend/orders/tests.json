@@ -1,0 +1,19 @@
+{
+  "tests": [
+    {
+      "name": "Создать заказ",
+      "method": "POST",
+      "path": "/",
+      "body": {"client_name": "Иван", "client_phone": "+79001234567", "device": "iPhone 14", "problem": "Разбит экран", "master": "Алексей М."},
+      "expectedStatus": 201,
+      "expectedBody": {"order_number": "TC-1002"},
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Получить список заказов",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200
+    }
+  ]
+}

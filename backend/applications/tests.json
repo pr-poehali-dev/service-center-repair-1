@@ -1,0 +1,19 @@
+{
+  "tests": [
+    {
+      "name": "Создать заявку",
+      "method": "POST",
+      "path": "/",
+      "body": {"name": "Иван", "phone": "+79001234567", "device": "iPhone 13", "comment": "Разбит экран"},
+      "expectedStatus": 201,
+      "expectedBody": {"id": 0},
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Получить список заявок",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200
+    }
+  ]
+}

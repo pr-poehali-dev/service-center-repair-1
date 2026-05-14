@@ -1,0 +1,19 @@
+{
+  "tests": [
+    {
+      "name": "Добавить отзыв",
+      "method": "POST",
+      "path": "/",
+      "body": {"name": "Мария", "device": "Samsung Galaxy", "rating": 5, "text": "Отличный сервис!"},
+      "expectedStatus": 201,
+      "expectedBody": {"id": 0},
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Получить опубликованные отзывы",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200
+    }
+  ]
+}
