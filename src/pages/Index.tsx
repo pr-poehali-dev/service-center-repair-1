@@ -118,7 +118,7 @@ export default function Index() {
             <div className="w-8 h-8 rounded-lg bg-[#e8251a] flex items-center justify-center">
               <Icon name="Zap" size={16} className="text-white" />
             </div>
-            <span className="font-display text-lg font-bold tracking-wider text-[#e8251a]">ТЕХНО<span className="text-gray-900">СЕРВИС</span></span>
+            <span className="font-display text-lg font-bold tracking-wider text-[#e8251a]">СЕРВИСНЫЙ<span className="text-gray-900"> ЦЕНТР</span></span>
           </div>
           <div className="hidden md:flex items-center gap-1">
             {NAV_LINKS.map(link => (
@@ -132,9 +132,9 @@ export default function Index() {
               </button>
             ))}
           </div>
-          <a href="tel:+74951234567" className="hidden md:flex items-center gap-2 btn-neon px-4 py-2 rounded-lg text-sm">
+          <a href="tel:+79038544433" className="hidden md:flex items-center gap-2 btn-neon px-4 py-2 rounded-lg text-sm">
             <Icon name="Phone" size={14} />
-            +7 (495) 123-45-67
+            +7 (903) 854-44-33
           </a>
           <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-gray-600 hover:text-gray-900">
             <Icon name={mobileMenuOpen ? "X" : "Menu"} size={24} />
@@ -148,8 +148,8 @@ export default function Index() {
                 {link.label}
               </button>
             ))}
-            <a href="tel:+74951234567" className="mt-2 btn-neon px-4 py-2 rounded-lg text-sm text-center">
-              +7 (495) 123-45-67
+            <a href="tel:+79038544433" className="mt-2 btn-neon px-4 py-2 rounded-lg text-sm text-center">
+              +7 (903) 854-44-33
             </a>
           </div>
         )}
@@ -378,7 +378,7 @@ export default function Index() {
           <div className="grid md:grid-cols-2 gap-10">
             <div className="space-y-5">
               {[
-                { icon: "Phone", label: "Телефон", value: "+7 (495) 123-45-67", link: "tel:+74951234567" },
+                { icon: "Phone", label: "Телефон", value: "+7 (903) 854-44-33", link: "tel:+79038544433" },
                 { icon: "MessageCircle", label: "WhatsApp / Telegram", value: "@technoservice_msk", link: "#" },
                 { icon: "Mail", label: "Email", value: "info@technoservice.ru", link: "mailto:info@technoservice.ru" },
                 { icon: "MapPin", label: "Адрес", value: "Москва, ул. Тверская, 12", link: "#" },
@@ -459,12 +459,12 @@ export default function Index() {
             <div className="w-6 h-6 rounded bg-[#e8251a] flex items-center justify-center">
               <Icon name="Zap" size={12} className="text-white" />
             </div>
-            <span className="font-display text-sm font-bold tracking-wider text-white">ТЕХНОСЕРВИС</span>
+            <span className="font-display text-sm font-bold tracking-wider text-white">СЕРВИСНЫЙ ЦЕНТР</span>
           </div>
-          <p className="text-gray-500 text-xs">© 2026 ТехноСервис. Все права защищены.</p>
+          <p className="text-gray-500 text-xs">© 2026 Сервисный центр. Все права защищены.</p>
           <div className="flex gap-4">
             {[
-              { icon: "Phone", link: "tel:+74951234567" },
+              { icon: "Phone", link: "tel:+79038544433" },
               { icon: "MessageCircle", link: "#" },
               { icon: "Mail", link: "mailto:info@technoservice.ru" },
             ].map((item, i) => (
