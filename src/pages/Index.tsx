@@ -87,22 +87,24 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen gradient-bg grid-pattern font-body text-white">
+    <div className="min-h-screen bg-white font-body text-gray-900">
 
       {/* NAV */}
-      <nav className="fixed top-0 left-0 right-0 z-50 glass-card border-b border-white/5">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-green-400 flex items-center justify-center">
-              <Icon name="Zap" size={16} className="text-black" />
+            <div className="w-8 h-8 rounded-lg bg-[#e8251a] flex items-center justify-center">
+              <Icon name="Zap" size={16} className="text-white" />
             </div>
-            <span className="font-display text-lg font-bold tracking-wider neon-text-blue">ТЕХНО<span className="text-white">СЕРВИС</span></span>
+            <span className="font-display text-lg font-bold tracking-wider text-[#e8251a]">ТЕХНО<span className="text-gray-900">СЕРВИС</span></span>
           </div>
           <div className="hidden md:flex items-center gap-1">
             {NAV_LINKS.map(link => (
               <button key={link.id} onClick={() => scrollTo(link.id)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                  activeSection === link.id ? "text-cyan-400 bg-cyan-400/10" : "text-white/60 hover:text-white hover:bg-white/5"
+                  activeSection === link.id
+                    ? "text-[#e8251a] bg-red-50"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                 }`}>
                 {link.label}
               </button>
@@ -112,15 +114,15 @@ export default function Index() {
             <Icon name="Phone" size={14} />
             +7 (495) 123-45-67
           </a>
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-white/70 hover:text-white">
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-gray-600 hover:text-gray-900">
             <Icon name={mobileMenuOpen ? "X" : "Menu"} size={24} />
           </button>
         </div>
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-white/5 px-4 py-3 flex flex-col gap-1">
+          <div className="md:hidden border-t border-gray-100 px-4 py-3 flex flex-col gap-1 bg-white">
             {NAV_LINKS.map(link => (
               <button key={link.id} onClick={() => scrollTo(link.id)}
-                className="text-left px-4 py-2 rounded-lg text-sm text-white/70 hover:text-white hover:bg-white/5 transition-all">
+                className="text-left px-4 py-2 rounded-lg text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-all">
                 {link.label}
               </button>
             ))}
@@ -134,21 +136,24 @@ export default function Index() {
       {/* HERO */}
       <section id="home" className="pt-16 min-h-screen flex items-center relative overflow-hidden">
         <div className="absolute inset-0">
-          <img src={HERO_IMAGE} alt="Сервисный центр" className="w-full h-full object-cover opacity-20" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0a0d12] via-[#0a0d12]/80 to-transparent" />
+          <img src={HERO_IMAGE} alt="Сервисный центр" className="w-full h-full object-cover opacity-10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/40" />
         </div>
+        {/* Yellow accent bar */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#e8251a] via-[#ffc107] to-[#e8251a]" />
+
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-cyan-400 text-xs font-semibold uppercase tracking-widest mb-6">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse-slow" />
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-50 border border-green-200 text-green-700 text-xs font-semibold uppercase tracking-widest mb-6">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse-slow" />
               Работаем сегодня до 21:00
             </div>
-            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-6">
+            <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-6 text-gray-900">
               РЕМОНТ<br />
-              <span className="neon-text-blue">ЭЛЕКТРО</span><br />
-              <span className="text-white/20">НИКИ</span>
+              <span className="text-[#e8251a]">ЭЛЕКТРО</span><br />
+              <span className="text-[#ffc107]">НИКИ</span>
             </h1>
-            <p className="text-white/60 text-lg mb-8 leading-relaxed max-w-md">
+            <p className="text-gray-500 text-lg mb-8 leading-relaxed max-w-md">
               Профессиональный ремонт смартфонов, ноутбуков и гаджетов. Следите за статусом ремонта онлайн в реальном времени.
             </p>
             <div className="flex flex-wrap gap-3">
@@ -162,14 +167,14 @@ export default function Index() {
           </div>
 
           {/* Order tracking widget */}
-          <div className="glass-card rounded-2xl p-6 neon-border">
+          <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-lg">
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-10 h-10 rounded-xl bg-cyan-400/10 flex items-center justify-center">
-                <Icon name="Search" size={20} className="text-cyan-400" />
+              <div className="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center">
+                <Icon name="Search" size={20} className="text-[#e8251a]" />
               </div>
               <div>
-                <h3 className="font-semibold text-white">Отследить ремонт</h3>
-                <p className="text-white/40 text-xs">Введите номер заказа</p>
+                <h3 className="font-semibold text-gray-900">Отследить ремонт</h3>
+                <p className="text-gray-400 text-xs">Введите номер заказа</p>
               </div>
             </div>
             <div className="flex gap-2 mb-4">
@@ -179,7 +184,7 @@ export default function Index() {
                 value={orderInput}
                 onChange={e => { setOrderInput(e.target.value); setOrderResult(null); }}
                 onKeyDown={e => e.key === "Enter" && checkOrder()}
-                className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/25 focus:outline-none focus:border-cyan-400/50 transition-all"
+                className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#e8251a]/50 transition-all"
               />
               <button onClick={checkOrder} className="btn-neon px-4 py-2.5 rounded-xl">
                 <Icon name="Search" size={16} />
@@ -187,18 +192,18 @@ export default function Index() {
             </div>
 
             {orderResult === null && (
-              <div className="text-white/30 text-xs text-center py-3">Попробуйте: TC-1042 / TC-0987 / TC-1101</div>
+              <div className="text-gray-400 text-xs text-center py-3">Попробуйте: TC-1042 / TC-0987 / TC-1101</div>
             )}
             {orderResult?.found === false && (
-              <div className="bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 text-red-400 text-sm text-center">
+              <div className="bg-red-50 border border-red-100 rounded-xl px-4 py-3 text-red-600 text-sm text-center">
                 Заказ не найден. Проверьте номер.
               </div>
             )}
             {orderResult?.found && orderResult.order && (
               <div className="space-y-3">
-                <div className="bg-white/3 rounded-xl p-4 border border-white/8">
-                  <p className="text-white font-medium text-sm mb-1">{orderResult.order.device}</p>
-                  <p className="text-white/40 text-xs">Мастер: {orderResult.order.master} · {orderResult.order.date}</p>
+                <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                  <p className="text-gray-900 font-medium text-sm mb-1">{orderResult.order.device}</p>
+                  <p className="text-gray-400 text-xs">Мастер: {orderResult.order.master} · {orderResult.order.date}</p>
                 </div>
                 <span className={`status-badge ${STATUSES[orderResult.order.status].cls}`}>
                   <Icon name={STATUSES[orderResult.order.status].icon} size={12} />
@@ -207,7 +212,7 @@ export default function Index() {
                 <div className="flex gap-1">
                   {[1, 2, 3, 4].map(step => (
                     <div key={step} className={`flex-1 h-1.5 rounded-full transition-all ${
-                      step <= STATUSES[orderResult.order!.status].step ? "bg-cyan-400" : "bg-white/10"
+                      step <= STATUSES[orderResult.order!.status].step ? "bg-[#e8251a]" : "bg-gray-100"
                     }`} />
                   ))}
                 </div>
@@ -218,35 +223,35 @@ export default function Index() {
       </section>
 
       {/* STATS */}
-      <section className="py-12 border-y border-white/5">
+      <section className="py-12 bg-[#e8251a]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-2 md:grid-cols-4 gap-6">
           {STATS.map((s, i) => (
             <div key={i} className="text-center">
-              <div className="font-display text-3xl sm:text-4xl font-bold neon-text-blue mb-1">{s.value}</div>
-              <div className="text-white/40 text-sm">{s.label}</div>
+              <div className="font-display text-3xl sm:text-4xl font-bold text-white mb-1">{s.value}</div>
+              <div className="text-red-200 text-sm">{s.label}</div>
             </div>
           ))}
         </div>
       </section>
 
       {/* SERVICES */}
-      <section id="services" className="py-20">
+      <section id="services" className="py-20 bg-gray-50 grid-pattern">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-14">
-            <p className="text-cyan-400 text-xs font-semibold uppercase tracking-widest mb-3">Что мы чиним</p>
-            <h2 className="font-display text-4xl sm:text-5xl font-bold">НАШИ УСЛУГИ</h2>
+            <p className="text-[#e8251a] text-xs font-semibold uppercase tracking-widest mb-3">Что мы чиним</p>
+            <h2 className="font-display text-4xl sm:text-5xl font-bold text-gray-900">НАШИ УСЛУГИ</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {SERVICES.map((s, i) => (
-              <div key={i} className="glass-card rounded-2xl p-6 group hover:neon-border transition-all duration-300 border border-white/5 hover:border-cyan-400/20">
-                <div className="w-12 h-12 rounded-xl bg-cyan-400/10 flex items-center justify-center mb-4 group-hover:bg-cyan-400/20 transition-all">
-                  <Icon name={s.icon} size={22} className="text-cyan-400" />
+              <div key={i} className="bg-white rounded-2xl p-6 group hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-red-100 cursor-pointer">
+                <div className="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center mb-4 group-hover:bg-red-100 transition-all">
+                  <Icon name={s.icon} size={22} className="text-[#e8251a]" />
                 </div>
-                <h3 className="font-semibold text-white text-lg mb-2">{s.title}</h3>
-                <p className="text-white/45 text-sm leading-relaxed mb-4">{s.desc}</p>
-                <div className="flex items-center justify-between pt-3 border-t border-white/8">
-                  <span className="neon-text-green text-sm font-semibold">{s.price}</span>
-                  <span className="flex items-center gap-1 text-white/35 text-xs">
+                <h3 className="font-semibold text-gray-900 text-lg mb-2">{s.title}</h3>
+                <p className="text-gray-500 text-sm leading-relaxed mb-4">{s.desc}</p>
+                <div className="flex items-center justify-between pt-3 border-t border-gray-100">
+                  <span className="text-[#e8251a] text-sm font-bold">{s.price}</span>
+                  <span className="flex items-center gap-1 text-gray-400 text-xs">
                     <Icon name="Clock" size={12} />
                     {s.time}
                   </span>
@@ -258,15 +263,15 @@ export default function Index() {
       </section>
 
       {/* ABOUT */}
-      <section id="about" className="py-20 border-t border-white/5">
+      <section id="about" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-16 items-center">
           <div>
-            <p className="text-cyan-400 text-xs font-semibold uppercase tracking-widest mb-3">Наша история</p>
-            <h2 className="font-display text-4xl sm:text-5xl font-bold mb-6">О НАС</h2>
-            <p className="text-white/55 leading-relaxed mb-5">
+            <p className="text-[#e8251a] text-xs font-semibold uppercase tracking-widest mb-3">Наша история</p>
+            <h2 className="font-display text-4xl sm:text-5xl font-bold text-gray-900 mb-6">О НАС</h2>
+            <p className="text-gray-500 leading-relaxed mb-5">
               Мы работаем с 2018 года и за это время выполнили более 8 000 ремонтов. Наша команда — это сертифицированные специалисты с опытом работы на официальных сервисных станциях.
             </p>
-            <p className="text-white/55 leading-relaxed mb-8">
+            <p className="text-gray-500 leading-relaxed mb-8">
               Используем только оригинальные запчасти или аналоги высокого качества. На все виды ремонта даём гарантию до 12 месяцев.
             </p>
             <div className="space-y-3">
@@ -277,10 +282,10 @@ export default function Index() {
                 { icon: "RefreshCw", text: "Онлайн-отслеживание статуса ремонта" },
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-green-400/10 flex items-center justify-center flex-shrink-0">
-                    <Icon name={item.icon} size={16} className="text-green-400" />
+                  <div className="w-8 h-8 rounded-lg bg-yellow-50 flex items-center justify-center flex-shrink-0">
+                    <Icon name={item.icon} size={16} className="text-[#ffc107]" style={{ filter: "brightness(0.7)" }} />
                   </div>
-                  <span className="text-white/70 text-sm">{item.text}</span>
+                  <span className="text-gray-700 text-sm">{item.text}</span>
                 </div>
               ))}
             </div>
@@ -292,10 +297,10 @@ export default function Index() {
               { icon: "Star", label: "Рейтинг", val: "4.9 / 5.0" },
               { icon: "Clock", label: "Режим работы", val: "9:00 – 21:00" },
             ].map((card, i) => (
-              <div key={i} className="glass-card rounded-2xl p-5 border border-white/5 scan-line">
-                <Icon name={card.icon} size={24} className="text-cyan-400 mb-3" />
+              <div key={i} className={`rounded-2xl p-5 border ${i % 2 === 0 ? "bg-[#e8251a] border-[#e8251a]" : "bg-[#ffc107] border-[#ffc107]"}`}>
+                <Icon name={card.icon} size={24} className="text-white mb-3" />
                 <div className="font-semibold text-white text-lg mb-0.5">{card.val}</div>
-                <div className="text-white/40 text-xs">{card.label}</div>
+                <div className="text-white/70 text-xs">{card.label}</div>
               </div>
             ))}
           </div>
@@ -303,26 +308,26 @@ export default function Index() {
       </section>
 
       {/* REVIEWS */}
-      <section id="reviews" className="py-20 border-t border-white/5">
+      <section id="reviews" className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-14">
-            <p className="text-cyan-400 text-xs font-semibold uppercase tracking-widest mb-3">Что говорят клиенты</p>
-            <h2 className="font-display text-4xl sm:text-5xl font-bold">ОТЗЫВЫ</h2>
+            <p className="text-[#e8251a] text-xs font-semibold uppercase tracking-widest mb-3">Что говорят клиенты</p>
+            <h2 className="font-display text-4xl sm:text-5xl font-bold text-gray-900">ОТЗЫВЫ</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {REVIEWS.map((r, i) => (
-              <div key={i} className="glass-card rounded-2xl p-5 border border-white/5 hover:border-white/10 transition-all">
+              <div key={i} className="bg-white rounded-2xl p-5 border border-gray-100 hover:shadow-md transition-all">
                 <div className="flex items-center gap-1 mb-4">
                   {[...Array(r.rating)].map((_, j) => (
-                    <Icon key={j} name="Star" size={14} className="text-yellow-400" />
+                    <Icon key={j} name="Star" size={14} className="text-[#ffc107]" />
                   ))}
                 </div>
-                <p className="text-white/65 text-sm leading-relaxed mb-5">"{r.text}"</p>
-                <div className="pt-3 border-t border-white/8">
-                  <div className="font-medium text-white text-sm">{r.name}</div>
+                <p className="text-gray-600 text-sm leading-relaxed mb-5">"{r.text}"</p>
+                <div className="pt-3 border-t border-gray-100">
+                  <div className="font-medium text-gray-900 text-sm">{r.name}</div>
                   <div className="flex items-center justify-between mt-0.5">
-                    <span className="text-white/35 text-xs">{r.device}</span>
-                    <span className="text-white/25 text-xs">{r.date}</span>
+                    <span className="text-gray-400 text-xs">{r.device}</span>
+                    <span className="text-gray-300 text-xs">{r.date}</span>
                   </div>
                 </div>
               </div>
@@ -332,11 +337,11 @@ export default function Index() {
       </section>
 
       {/* CONTACTS */}
-      <section id="contacts" className="py-20 border-t border-white/5">
+      <section id="contacts" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-14">
-            <p className="text-cyan-400 text-xs font-semibold uppercase tracking-widest mb-3">Свяжитесь с нами</p>
-            <h2 className="font-display text-4xl sm:text-5xl font-bold">КОНТАКТЫ</h2>
+            <p className="text-[#e8251a] text-xs font-semibold uppercase tracking-widest mb-3">Свяжитесь с нами</p>
+            <h2 className="font-display text-4xl sm:text-5xl font-bold text-gray-900">КОНТАКТЫ</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-10">
             <div className="space-y-5">
@@ -348,29 +353,29 @@ export default function Index() {
                 { icon: "Clock", label: "Режим работы", value: "Пн–Вс: 9:00 – 21:00", link: null },
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-cyan-400/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Icon name={item.icon} size={18} className="text-cyan-400" />
+                  <div className="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Icon name={item.icon} size={18} className="text-[#e8251a]" />
                   </div>
                   <div>
-                    <div className="text-white/35 text-xs mb-0.5">{item.label}</div>
+                    <div className="text-gray-400 text-xs mb-0.5">{item.label}</div>
                     {item.link ? (
-                      <a href={item.link} className="text-white font-medium hover:text-cyan-400 transition-colors">{item.value}</a>
+                      <a href={item.link} className="text-gray-900 font-medium hover:text-[#e8251a] transition-colors">{item.value}</a>
                     ) : (
-                      <span className="text-white font-medium">{item.value}</span>
+                      <span className="text-gray-900 font-medium">{item.value}</span>
                     )}
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="glass-card rounded-2xl p-6 neon-border">
+            <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-lg">
               {contactSent ? (
                 <div className="h-full flex flex-col items-center justify-center py-8 text-center">
-                  <div className="w-16 h-16 rounded-full bg-green-400/15 flex items-center justify-center mb-4">
-                    <Icon name="CheckCircle" size={32} className="text-green-400" />
+                  <div className="w-16 h-16 rounded-full bg-green-50 flex items-center justify-center mb-4">
+                    <Icon name="CheckCircle" size={32} className="text-green-500" />
                   </div>
-                  <h3 className="font-semibold text-white text-lg mb-2">Заявка отправлена!</h3>
-                  <p className="text-white/45 text-sm">Мы перезвоним вам в течение 15 минут</p>
+                  <h3 className="font-semibold text-gray-900 text-lg mb-2">Заявка отправлена!</h3>
+                  <p className="text-gray-500 text-sm">Мы перезвоним вам в течение 15 минут</p>
                   <button onClick={() => { setContactSent(false); setContactForm({ name: "", phone: "", device: "", comment: "" }); }}
                     className="mt-6 btn-outline-neon px-5 py-2 rounded-xl text-sm">
                     Отправить ещё
@@ -378,32 +383,32 @@ export default function Index() {
                 </div>
               ) : (
                 <form onSubmit={handleContactSubmit} className="space-y-4">
-                  <h3 className="font-semibold text-white text-lg mb-5">Оставить заявку</h3>
+                  <h3 className="font-semibold text-gray-900 text-lg mb-5">Оставить заявку</h3>
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="text-white/40 text-xs mb-1.5 block">Ваше имя</label>
+                      <label className="text-gray-500 text-xs mb-1.5 block">Ваше имя</label>
                       <input required value={contactForm.name} onChange={e => setContactForm(p => ({ ...p, name: e.target.value }))}
                         placeholder="Иван"
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/20 focus:outline-none focus:border-cyan-400/50 transition-all" />
+                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#e8251a]/50 transition-all" />
                     </div>
                     <div>
-                      <label className="text-white/40 text-xs mb-1.5 block">Телефон</label>
+                      <label className="text-gray-500 text-xs mb-1.5 block">Телефон</label>
                       <input required value={contactForm.phone} onChange={e => setContactForm(p => ({ ...p, phone: e.target.value }))}
                         placeholder="+7 (___) ___-__-__"
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/20 focus:outline-none focus:border-cyan-400/50 transition-all" />
+                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#e8251a]/50 transition-all" />
                     </div>
                   </div>
                   <div>
-                    <label className="text-white/40 text-xs mb-1.5 block">Устройство</label>
+                    <label className="text-gray-500 text-xs mb-1.5 block">Устройство</label>
                     <input value={contactForm.device} onChange={e => setContactForm(p => ({ ...p, device: e.target.value }))}
                       placeholder="Например: iPhone 13, Samsung Galaxy S22"
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/20 focus:outline-none focus:border-cyan-400/50 transition-all" />
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#e8251a]/50 transition-all" />
                   </div>
                   <div>
-                    <label className="text-white/40 text-xs mb-1.5 block">Опишите проблему</label>
+                    <label className="text-gray-500 text-xs mb-1.5 block">Опишите проблему</label>
                     <textarea value={contactForm.comment} onChange={e => setContactForm(p => ({ ...p, comment: e.target.value }))}
                       rows={3} placeholder="Разбит экран, не заряжается..."
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/20 focus:outline-none focus:border-cyan-400/50 transition-all resize-none" />
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#e8251a]/50 transition-all resize-none" />
                   </div>
                   <button type="submit" className="w-full btn-neon py-3 rounded-xl font-semibold text-sm">
                     Отправить заявку
@@ -416,22 +421,22 @@ export default function Index() {
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-white/5 py-8">
+      <footer className="bg-gray-900 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded bg-gradient-to-br from-cyan-400 to-green-400 flex items-center justify-center">
-              <Icon name="Zap" size={12} className="text-black" />
+            <div className="w-6 h-6 rounded bg-[#e8251a] flex items-center justify-center">
+              <Icon name="Zap" size={12} className="text-white" />
             </div>
-            <span className="font-display text-sm font-bold tracking-wider text-white/60">ТЕХНОСЕРВИС</span>
+            <span className="font-display text-sm font-bold tracking-wider text-white">ТЕХНОСЕРВИС</span>
           </div>
-          <p className="text-white/25 text-xs">© 2026 ТехноСервис. Все права защищены.</p>
+          <p className="text-gray-500 text-xs">© 2026 ТехноСервис. Все права защищены.</p>
           <div className="flex gap-4">
             {[
               { icon: "Phone", link: "tel:+74951234567" },
               { icon: "MessageCircle", link: "#" },
               { icon: "Mail", link: "mailto:info@technoservice.ru" },
             ].map((item, i) => (
-              <a key={i} href={item.link} className="text-white/30 hover:text-cyan-400 transition-colors">
+              <a key={i} href={item.link} className="text-gray-500 hover:text-[#e8251a] transition-colors">
                 <Icon name={item.icon} size={18} />
               </a>
             ))}
