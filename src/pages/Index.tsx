@@ -4,6 +4,7 @@ import Icon from "@/components/ui/icon";
 const API = {
   applications: "https://functions.poehali.dev/0fb80a10-6aa5-44cc-a5dc-06e8681319f0",
   orders: "https://functions.poehali.dev/37b0c3fa-790a-4f92-a8b7-81cb24b39951",
+  reviews: "https://functions.poehali.dev/59485096-39bd-49bc-a63d-b96047a2952e",
 };
 
 const HERO_IMAGE = "https://cdn.poehali.dev/projects/515f9a1c-35f2-400b-9e2b-b28d4e3ff206/files/0d563dcb-d975-4f1b-88c6-f205c8824ddc.jpg";
@@ -83,6 +84,10 @@ export default function Index() {
   const [contactSent, setContactSent] = useState(false);
   const [contactLoading, setContactLoading] = useState(false);
   const [orderLoading, setOrderLoading] = useState(false);
+  const [reviewForm, setReviewForm] = useState({ name: "", device: "", rating: 5, text: "" });
+  const [reviewSent, setReviewSent] = useState(false);
+  const [reviewLoading, setReviewLoading] = useState(false);
+  const [showReviewForm, setShowReviewForm] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -119,6 +124,21 @@ export default function Index() {
       setOrderResult({ found: false });
     } finally {
       setOrderLoading(false);
+    }
+  };
+
+  const handleReviewSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setReviewLoading(true);
+    try {
+      await fetch(API.reviews, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reviewForm),
+      });
+      setReviewSent(true);
+    } finally {
+      setReviewLoading(false);
     }
   };
 
@@ -375,7 +395,7 @@ export default function Index() {
             <p className="text-[#e8251a] text-xs font-semibold uppercase tracking-widest mb-3">Что говорят клиенты</p>
             <h2 className="font-display text-4xl sm:text-5xl font-bold text-gray-900">ОТЗЫВЫ</h2>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
             {REVIEWS.map((r, i) => (
               <div key={i} className="bg-white rounded-2xl p-5 border border-gray-100 hover:shadow-md transition-all">
                 <div className="flex items-center gap-1 mb-4">
@@ -394,6 +414,77 @@ export default function Index() {
               </div>
             ))}
           </div>
+
+          {/* Кнопка и форма отзыва */}
+          {!showReviewForm && !reviewSent && (
+            <div className="text-center">
+              <button onClick={() => setShowReviewForm(true)}
+                className="btn-outline-neon px-6 py-3 rounded-xl text-sm font-semibold inline-flex items-center gap-2">
+                <Icon name="PenLine" size={16} />
+                Оставить отзыв
+              </button>
+            </div>
+          )}
+
+          {showReviewForm && !reviewSent && (
+            <div className="max-w-xl mx-auto bg-white rounded-2xl p-6 border border-gray-100 shadow-lg">
+              <h3 className="font-semibold text-gray-900 text-lg mb-5">Ваш отзыв</h3>
+              <form onSubmit={handleReviewSubmit} className="space-y-4">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-gray-500 text-xs mb-1.5 block">Ваше имя</label>
+                    <input required value={reviewForm.name} onChange={e => setReviewForm(p => ({ ...p, name: e.target.value }))}
+                      placeholder="Иван"
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#e8251a]/50 transition-all" />
+                  </div>
+                  <div>
+                    <label className="text-gray-500 text-xs mb-1.5 block">Устройство</label>
+                    <input value={reviewForm.device} onChange={e => setReviewForm(p => ({ ...p, device: e.target.value }))}
+                      placeholder="iPhone 13, Samsung..."
+                      className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#e8251a]/50 transition-all" />
+                  </div>
+                </div>
+                <div>
+                  <label className="text-gray-500 text-xs mb-2 block">Оценка</label>
+                  <div className="flex items-center gap-1">
+                    {[1, 2, 3, 4, 5].map(star => (
+                      <button key={star} type="button" onClick={() => setReviewForm(p => ({ ...p, rating: star }))}
+                        className="transition-transform hover:scale-110">
+                        <Icon name="Star" size={28} className={star <= reviewForm.rating ? "text-[#ffc107]" : "text-gray-200"} />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <label className="text-gray-500 text-xs mb-1.5 block">Ваш отзыв</label>
+                  <textarea required value={reviewForm.text} onChange={e => setReviewForm(p => ({ ...p, text: e.target.value }))}
+                    rows={3} placeholder="Расскажите о своём опыте..."
+                    className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#e8251a]/50 transition-all resize-none" />
+                </div>
+                <div className="flex gap-3">
+                  <button type="button" onClick={() => setShowReviewForm(false)}
+                    className="flex-1 btn-outline-neon py-2.5 rounded-xl text-sm">
+                    Отмена
+                  </button>
+                  <button type="submit" disabled={reviewLoading}
+                    className="flex-1 btn-neon py-2.5 rounded-xl text-sm font-semibold disabled:opacity-60 flex items-center justify-center gap-2">
+                    {reviewLoading && <Icon name="Loader" size={14} className="animate-spin" />}
+                    {reviewLoading ? "Отправляем..." : "Отправить"}
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+
+          {reviewSent && (
+            <div className="max-w-xl mx-auto text-center bg-white rounded-2xl p-8 border border-gray-100 shadow-lg">
+              <div className="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-4">
+                <Icon name="CheckCircle" size={28} className="text-green-500" />
+              </div>
+              <h3 className="font-semibold text-gray-900 text-lg mb-2">Спасибо за отзыв!</h3>
+              <p className="text-gray-500 text-sm">Он появится на сайте после проверки модератором</p>
+            </div>
+          )}
         </div>
       </section>
 
